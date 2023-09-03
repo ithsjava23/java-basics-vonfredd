@@ -179,7 +179,7 @@ public class App {
         double sum = Double.MAX_VALUE;
 
         String firstHour = "";
-        double price = 0;
+        double price;
 
         for (int i = 0; i < arrPrice.length-4; i++) {
             if (sum > (arrPrice[i] + arrPrice[i+1] + arrPrice[i+2] +arrPrice[i+3] )){
