@@ -42,7 +42,7 @@ public class App {
                     case 1 -> priceInput(priceOfElectricity, copyOfPriceArray, sc);
                     case 2 -> minMaxMedel(priceOfElectricity, hourArray);
                     case 3 -> sortedPrice(copyOfPriceArray, copyOfHourArray);
-                    case 4 -> bestTimeToLoad(priceOfElectricity, hourArray);
+                    case 4 -> System.out.print("\n"+bestTimeToLoad(priceOfElectricity, hourArray));
                 }
             }
         }
@@ -144,7 +144,7 @@ String menuvg = """
             System.out.print(arrHour[i] + " " + arrPrice[i] + " öre\n");
         }
     }
-    public static void bestTimeToLoad(int[] arrPrice, String[] arrHours){
+    public static String bestTimeToLoad(int[] arrPrice, String[] arrHours){
         double sum = Double.MAX_VALUE;
 
         String firstHour = "";
@@ -165,7 +165,7 @@ String menuvg = """
                 Medelpris 4h: %.1f öre/kWh
                 """;
         String formattedString = String.format(response,firstHour,price);
-        System.out.print("\n" + formattedString);
+        return formattedString;
     }
 
     public static String medel(int[]arr, String[] arrayHours){
