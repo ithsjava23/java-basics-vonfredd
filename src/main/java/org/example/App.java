@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-        Locale.setDefault(Locale.US);
+        Locale swedishLocale = new Locale("sv", "SE");
+        Locale.setDefault(swedishLocale);
         Scanner sc = new Scanner(System.in);
         String inputFromUser;
         int[] priceOfElectricity = new int[24];
