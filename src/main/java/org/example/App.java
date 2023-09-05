@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class App {
 
-
-    static int counter = 0;
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -65,58 +63,49 @@ public class App {
         System.arraycopy(arr, 0, copyArr, 0, arr.length);
     }
     public static void minMaxMedel(int[]arr, String[] arrayHours){
-        double sum = 0;
-        int maxValue = 0;
-        String hour = "";
-
-        for (int i = 0; i < arr.length; i++){
-            sum += arr[i];
-        }
-        double doubleSum = (sum / 24);
-
-        for (int i = 0; i < arr.length; i++){
-            if (maxValue < arr[i]) {
-                maxValue = arr[i];
-                hour = arrayHours[i];
-            }
-        }
-
-        int minValue = Integer.MAX_VALUE;
-        String hourHere = "";
-
-        for (int i = 0; i < arr.length; i++){
-            if (minValue > arr[i]) {
-                minValue = arr[i];
-                hourHere = arrayHours[i];
-            }
-        }
-        String response = """
-                Lägsta pris: %s, %d öre/kWh
-                Högsta pris: %s, %d öre/kWh
-                Medelpris: %.2f öre/kWh
-                """;
 
 
-//String formatted = String.format(response,hourHere,minValue,hour,maxValue,doubleSum);
-//System.out.print(formatted);
+        String low = min(arr, arrayHours);
+        String high = max(arr, arrayHours);
+        String medel = medel(arr, arrayHours);
 
-        String responseDumb = """
-                Lägsta pris: 02-03, 1 öre/kWh
-                Högsta pris: 00-01, 100 öre/kWh
-                Medelpris: 13,38 öre/kWh
-                """;
-        String responseDumber = """
-                Lägsta pris: 02-03, -2 öre/kWh
-                Högsta pris: 00-01, 102 öre/kWh
-                Medelpris: 13,33 öre/kWh
-                """;
+        System.out.println(low+"\n"+high+"\n"+medel);
 
-if (counter == 0){
-    System.out.println(responseDumb);
-    counter = 1;
-}else{
-    System.out.println(responseDumber);
-}
+  //   double sum = 0;
+  //   int maxValue = 0;
+  //   String hour = "";
+  //
+  //   for (int i = 0; i < arr.length; i++){
+  //       sum += arr[i];
+  //   }
+  //   double doubleSum = (sum / 24);
+  //
+  //   for (int i = 0; i < arr.length; i++){
+  //       if (maxValue < arr[i]) {
+  //           maxValue = arr[i];
+  //           hour = arrayHours[i];
+  //       }
+  //   }
+  //
+  //   int minValue = Integer.MAX_VALUE;
+  //   String hourHere = "";
+  //
+  //   for (int i = 0; i < arr.length; i++){
+  //       if (minValue > arr[i]) {
+  //           minValue = arr[i];
+  //           hourHere = arrayHours[i];
+  //       }
+  //   }
+  //   String response = """
+  //           Lägsta pris: %s, %d öre/kWh
+  //           Högsta pris: %s, %d öre/kWh
+  //           Medelpris: %.2f öre/kWh
+  //           """;
+  //
+  //
+  //       String formatted = String.format(response,hourHere,minValue,hour,maxValue,doubleSum);
+  //       System.out.print(formatted);
+
 }
 public static void menu(){
 String menuvg = """
@@ -177,5 +166,45 @@ String menuvg = """
                 """;
         String formattedString = String.format(response,firstHour,price);
         System.out.print("\n" + formattedString);
+    }
+
+    public static String medel(int[]arr, String[] arrayHours){
+        double sum = 0;
+        for (int i = 0; i < arr.length; i++){
+            sum += arr[i];
+        }
+        double doubleSum = (sum / 24);
+
+        String midPrice = "Medelpris: %.2f öre/kWh";
+
+        return String.format(midPrice,doubleSum);
+    }
+
+    public static String max(int[] arr, String[] arrayHours){
+        String hour = "";
+        int maxValue = 0;
+        for (int i = 0; i < arr.length; i++){
+            if (maxValue < arr[i]) {
+                maxValue = arr[i];
+                hour = arrayHours[i];
+            }
+        }
+        String high = "Högsta pris: %s, %d öre/kWh";
+
+        return String.format(high,hour,maxValue);
+    }
+    public static String min(int[] arr, String[] arrayHours){
+        int minValue = Integer.MAX_VALUE;
+        String hourHere = "";
+
+        for (int i = 0; i < arr.length; i++){
+            if (minValue > arr[i]) {
+                minValue = arr[i];
+                hourHere = arrayHours[i];
+            }
+        }
+        String low = "Lägsta pris: %s, %d öre/kWh";
+
+        return String.format(low,hourHere,minValue);
     }
 }
