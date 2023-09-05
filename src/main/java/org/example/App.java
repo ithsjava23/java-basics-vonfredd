@@ -43,7 +43,6 @@ public class App {
                     case 2 -> minMaxMedel(priceOfElectricity, hourArray);
                     case 3 -> sortedPrice(copyOfPriceArray, copyOfHourArray);
                     case 4 -> bestTimeToLoad(priceOfElectricity, hourArray);
-                    case 5 -> diagram(priceOfElectricity);
                 }
             }
         }
@@ -112,44 +111,6 @@ public class App {
                 e. Avsluta
                 """;
         System.out.print(menuvg);
-    }
-
-    public static void diagram(int[] arr){
-        int maxValue = 0;
-        int minValue = Integer.MAX_VALUE;
-
-        for (int i = 0; i < arr.length; i++){
-            if (maxValue < arr[i]) {
-                maxValue = arr[i];
-            }
-            if (minValue > arr[i]) {
-                minValue = arr[i];
-            }
-        }
-
-        for (int i = maxValue; i >= 0; i--) {
-            for (int j = 0; j < arr.length; j++) {
-                if (arr[j] > i){
-                    System.out.print("*  ");
-                }else {
-                    System.out.print("   ");
-                }
-            }
-            System.out.print("\n");
-        }
-
-        for (int i = 0; i <= 23; i++) {
-            System.out.print("---");
-        }
-        System.out.print("\n");
-
-        for (int i = 0; i <= 23; i++) {
-            if (i > 9){
-                System.out.print(i + " ");
-            }else
-             System.out.print("0" + i + " ");
-        }
-        System.out.print("\n");
     }
 
     public static void sortedPrice(int[] arrPrice, String[] arrHour){
