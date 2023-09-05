@@ -37,7 +37,6 @@ public class App {
                        System.out.println("Fel val!");
                        continue;
                    }
-
                 switch (choise) {
                     case 1 -> priceInput(priceOfElectricity, copyOfPriceArray, sc);
                     case 2 -> minMaxMedel(priceOfElectricity, hourArray);
@@ -46,7 +45,6 @@ public class App {
                 }
             }
         }
-
 
     public static void priceInput(int[] arr, int[] copyArr, Scanner sc){
         System.out.print("Lägg till priser för varje timme:\n");
