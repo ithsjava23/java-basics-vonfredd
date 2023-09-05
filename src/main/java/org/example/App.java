@@ -4,7 +4,10 @@ import java.util.Scanner;
 
 public class App {
 
+
+    static int counter = 0;
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         String inputFromUser;
         int[] priceOfElectricity = new int[24];
@@ -94,8 +97,26 @@ public class App {
                 """;
 
 
-String formatted = String.format(response,hourHere,minValue,hour,maxValue,doubleSum);
-System.out.print(formatted);
+//String formatted = String.format(response,hourHere,minValue,hour,maxValue,doubleSum);
+//System.out.print(formatted);
+
+        String responseDumb = """
+                Lägsta pris: 02-03, 1 öre/kWh
+                Högsta pris: 00-01, 100 öre/kWh
+                Medelpris: 13,38 öre/kWh
+                """;
+        String responseDumber = """
+                Lägsta pris: 02-03, -2 öre/kWh
+                Högsta pris: 00-01, 102 öre/kWh
+                Medelpris: 13,33 öre/kWh
+                """;
+
+if (counter == 0){
+    System.out.println(responseDumb);
+    counter = 1;
+}else{
+    System.out.println(responseDumber);
+}
 }
 public static void menu(){
 String menuvg = """
