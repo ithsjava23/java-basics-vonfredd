@@ -95,7 +95,6 @@ public class App {
 
 
 String formatted = String.format(response,hourHere,minValue,hour,maxValue,doubleSum);
-
 System.out.print(formatted);
 }
 public static void menu(){
