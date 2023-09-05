@@ -87,7 +87,6 @@ public class App {
                 hourHere = arrayHours[i];
             }
         }
-
         String response = """
                 Lägsta pris: %s, %d öre/kWh
                 Högsta pris: %s, %d öre/kWh
