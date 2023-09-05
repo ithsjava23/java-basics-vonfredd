@@ -93,12 +93,14 @@ public class App {
                 Högsta pris: %s, %d öre/kWh
                 Medelpris: %.2f öre/kWh
                 """;
-        String formatted = String.format(response,hourHere,minValue,hour,maxValue,doubleSum);
 
-        System.out.print(formatted);
-    }
-    public static void menu(){
-        String menuvg = """
+
+String formatted = String.format(response,hourHere,minValue,hour,maxValue,doubleSum);
+
+System.out.print(formatted);
+}
+public static void menu(){
+String menuvg = """
                 Elpriser
                 ========
                 1. Inmatning
