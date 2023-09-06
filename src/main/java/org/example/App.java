@@ -165,13 +165,13 @@ String menuvg = """
 
     public static void diagram(int[] arr, String[] arrayHours) {
 
-        double maxValue = 0;
-        double valueUnderMax;
-        double minValue = Integer.MAX_VALUE;
-        double mediumValue;
-        double valueOverMin;
-        double stageValue;
-        double valueOverMedium;
+        int maxValue = 0;
+        int valueUnderMax;
+        int minValue = Integer.MAX_VALUE;
+        int mediumValue;
+        int valueOverMin;
+        int rowValue;
+        int valueOverMedium;
 
         String one = "";
         String two = "";
@@ -192,57 +192,62 @@ String menuvg = """
             }
         }
 
-        stageValue = (maxValue - minValue) /5;
+        rowValue = (maxValue - minValue) /5;
 
-        valueOverMin = minValue + stageValue;
-        mediumValue = (int)(valueOverMin + stageValue);
-        valueOverMedium = (int)(mediumValue + stageValue);
-        valueUnderMax = valueOverMedium + stageValue;
+        valueOverMin = minValue + rowValue;
+        mediumValue = (valueOverMin + rowValue);
+        valueOverMedium = (mediumValue + rowValue);
+        valueUnderMax = valueOverMedium + rowValue;
 
         for (int i = 0; i < 8; i++) {
             if(i == 0){
-                 one =(int)maxValue + "|  ";
+                 one += String.format("%3d|%2s",maxValue,"");
             }
-            else if(i == 5) {
-                if(minValue < 0)
-                    six += (int)minValue + "|  ";
-                else
-                    six += " " + (int)minValue + "|  ";
-            }
+            else if(i == 5)
+                six += String.format("%3d|%2s",minValue,"");
             else if(i == 6) {
-                seven = "   |------------------------------------------------------------------------";
+                seven = String.format("%3s|------------------------------------------------------------------------","");
             }
             else if (i == 7)
                 break;
             else
                 switch (i){
-                case 1 -> two += "   |  ";
-                case 2 -> three += "   |  ";
-                case 3 -> four += "   |  ";
-                case 4 -> five += "   |  ";
-                case 5 -> six += "   |  ";
-                case 6 -> seven += "|  ";
-
+                case 1 -> two += String.format("%3s|%2s","","");
+                case 2 -> three += String.format("%3s|%2s","","");
+                case 3 -> four += String.format("%3s|%2s","","");
+                case 4 -> five += String.format("%3s|%2s","","");
                 }
+
             for (int j = 0; j < arr.length; j++) {
                 if (i == 0 && arr[j] == maxValue) {
-                    one += "x  ";
-                } else if (i == 1 && arr[j] >= (int)valueUnderMax) {
-                    two += "x  ";
+                        one += String.format("x%2s","");
+                } else if (i == 1 && arr[j] >= valueUnderMax) {
+                    two += String.format("x%2s","");
                 }else if (i == 2 && arr[j] >= valueOverMedium) {
-                    three += "x  ";
+                    three += String.format("x%2s","");
                 }else if (i == 3 && arr[j] >= mediumValue) {
-                    four += "x  ";
-                }else if (i == 4 && arr[j] >= (int)valueOverMin) {
-                    five += "x  ";
+                        four += String.format("x%2s","");
+                }else if (i == 4 && arr[j] >= valueOverMin) {
+                        five += String.format("x%2s","");
                 }else if (i == 5 && arr[j] >= minValue) {
-                    six += "x  ";
-                }
+                        six += String.format("x%2s","");
+                }else
+                    switch(i){
+                    case 0 -> one += String.format(" %2s","");
+                    case 1 -> two += String.format(" %2s","");
+                    case 2 -> three += String.format(" %2s","");
+                    case 3 -> four += String.format(" %2s","");
+                    case 4 -> five += String.format(" %2s","");
+                    case 5 -> six += String.format(" %2s","");
+                    }
+
             }
             if(i == 6){
                 for (int j = 0; j < arr.length; j++) {
                     if (j == 0) {
-                        eight += "   | 00 ";
+                        eight += String.format("%3s|%1s00%1s","","","");
+                    }else if(j == arr.length-1){
+                        eight += arrayHours[j].substring(0, 2);
                     }
                     else {
                         eight += arrayHours[j].substring(0, 2) + " ";
@@ -251,19 +256,26 @@ String menuvg = """
             }
         }
 
+        one = one.substring(0,one.length()-2);
+        two = two.substring(0,two.length()-2);
+        three = three.substring(0,three.length()-2);
+        four = four.substring(0,four.length()-2);
+        five = five.substring(0,five.length()-2);
+        six = six.substring(0,six.length()-2);
+
         String svar = """
-                %s  
-                %s  
-                %s  
-                %s  
-                %s  
+                %s
+                %s
+                %s
+                %s
+                %s
                 %s
                 %s
                 %s
                 """;
 
         String formatted = String.format(svar,one,two,three,four,five,six,seven,eight);
-        System.out.println(formatted);
+        System.out.println("FORMAT : \n" +formatted);
     }
 }
 
