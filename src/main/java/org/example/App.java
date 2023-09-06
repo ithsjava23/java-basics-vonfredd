@@ -45,6 +45,7 @@ public class App {
                     case 2 -> minMaxMedel(priceOfElectricity, hourArray);
                     case 3 -> sortedPrice(copyOfPriceArray, copyOfHourArray);
                     case 4 -> bestTimeToLoad(priceOfElectricity, hourArray);
+                    case 5 -> diagram(priceOfElectricity, hourArray);
                 }
             }
         }
@@ -161,4 +162,108 @@ String menuvg = """
         String formattedString = String.format(response,firstHour,price);
         System.out.print("\n" + formattedString);
     }
+
+    public static void diagram(int[] arr, String[] arrayHours) {
+
+        double maxValue = 0;
+        double valueUnderMax;
+        double minValue = Integer.MAX_VALUE;
+        double mediumValue;
+        double valueOverMin;
+        double stageValue;
+        double valueOverMedium;
+
+        String one = "";
+        String two = "";
+        String three = "";
+        String four = "";
+        String five = "";
+        String six = "";
+        String seven = "";
+        String eight = "";
+
+
+        for (int i = 0; i < arr.length; i++) {
+            if (minValue > arr[i]) {
+                minValue = arr[i];
+            }
+            if (maxValue < arr[i]) {
+                maxValue = arr[i];
+            }
+        }
+
+        stageValue = (maxValue - minValue) /5;
+
+        valueOverMin = minValue + stageValue;
+        mediumValue = (int)(valueOverMin + stageValue);
+        valueOverMedium = (int)(mediumValue + stageValue);
+        valueUnderMax = valueOverMedium + stageValue;
+
+        for (int i = 0; i < 8; i++) {
+            if(i == 0){
+                 one =(int)maxValue + "|  ";
+            }
+            else if(i == 5) {
+                if(minValue < 0)
+                    six += (int)minValue + "|  ";
+                else
+                    six += " " + (int)minValue + "|  ";
+            }
+            else if(i == 6) {
+                seven = "   |------------------------------------------------------------------------";
+            }
+            else if (i == 7)
+                break;
+            else
+                switch (i){
+                case 1 -> two += "   |  ";
+                case 2 -> three += "   |  ";
+                case 3 -> four += "   |  ";
+                case 4 -> five += "   |  ";
+                case 5 -> six += "   |  ";
+                case 6 -> seven += "|  ";
+
+                }
+            for (int j = 0; j < arr.length; j++) {
+                if (i == 0 && arr[j] == maxValue) {
+                    one += "x  ";
+                } else if (i == 1 && arr[j] >= (int)valueUnderMax) {
+                    two += "x  ";
+                }else if (i == 2 && arr[j] >= valueOverMedium) {
+                    three += "x  ";
+                }else if (i == 3 && arr[j] >= mediumValue) {
+                    four += "x  ";
+                }else if (i == 4 && arr[j] >= (int)valueOverMin) {
+                    five += "x  ";
+                }else if (i == 5 && arr[j] >= minValue) {
+                    six += "x  ";
+                }
+            }
+            if(i == 6){
+                for (int j = 0; j < arr.length; j++) {
+                    if (j == 0) {
+                        eight += "   | 00 ";
+                    }
+                    else {
+                        eight += arrayHours[j].substring(0, 2) + " ";
+                    }
+                }
+            }
+        }
+
+        String svar = """
+                %s  
+                %s  
+                %s  
+                %s  
+                %s  
+                %s
+                %s
+                %s
+                """;
+
+        String formatted = String.format(svar,one,two,three,four,five,six,seven,eight);
+        System.out.println(formatted);
+    }
 }
+
