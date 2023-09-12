@@ -145,9 +145,9 @@ String menuvg = """
         int maxValue = 0; // Maxvalue as a roof
         int minValue = Integer.MAX_VALUE; // Minvalue as a floor
         int valueUnderMax; //2nd level
-        int mediumValue; //3rd level
-        int valueOverMin; //4th level
-        int valueOverMedium; //5th value
+        int mediumValue; //4th level
+        int valueOverMin; //5th level
+        int valueOverMedium; //3rd level
         int rowValue; //The amount to raise every level with
          /*
           Declares the largest and smallest number
@@ -167,6 +167,8 @@ String menuvg = """
         valueUnderMax = valueOverMedium + rowValue;
 
         int[] levelNums = {maxValue,valueUnderMax,valueOverMedium,mediumValue,valueOverMin,minValue};
+        StringBuilder endingLines = new StringBuilder();
+        StringBuilder hours = new StringBuilder();
 
         for (int i = 0; i < levelNums.length; i++) {
             for (int j = 0; j < arr.length; j++) {
@@ -180,23 +182,18 @@ String menuvg = """
                     System.out.printf("%2sx", "");
                 else
                     System.out.printf("%3s", "");
+                if (i == 0 ) {
+                    if (j == 0) {
+                        endingLines.append(String.format("%3s|", ""));
+                        hours.append(String.format("%3s|", ""));
+                    }
+                    endingLines.append("---");
+                    hours.append(String.format("%1s"+(arrayHours[j].substring(0,2)),""));
+                }
             }
             System.out.print("\n");
         }
-        for (int j = 0; j < 48; j++) {
-            if (j == 0)
-                System.out.printf("%3s|","");
-            if (j < 24)
-                System.out.print("---");
-            if (j == 24)
-                System.out.print("\n");
-            if(j > 24)
-                if (j == 25)
-                    System.out.printf("%3s|%1s00%1s"+(arrayHours[j - arrayHours.length].substring(0,2)),"","","");
-                else
-                    System.out.printf("%1s"+(arrayHours[j - arrayHours.length].substring(0,2)),"","");
-        }
-        System.out.print("\n");
+        System.out.print(endingLines+"\n"+hours+"\n");
     }
     public static String max(int[] arr, String[] arrayHours){
         int maxValue = 0;
