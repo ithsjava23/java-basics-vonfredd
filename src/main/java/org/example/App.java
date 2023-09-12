@@ -6,9 +6,8 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-        Locale swedishLocale = new Locale("sv", "SE");
+        Locale swedishLocale = Locale.of("sv", "SE");
         Locale.setDefault(swedishLocale);
-
         Scanner sc = new Scanner(System.in);
         String inputFromUser;
         int[] priceOfElectricity = new int[24];
@@ -29,19 +28,19 @@ public class App {
 
         while (true) {
             menu();
-            int choise;
+            int choice;
             inputFromUser = sc.nextLine();
 
             if(inputFromUser.equals("e")|| inputFromUser.equals("E")){
                 break;
             }
                    try {
-                       choise = Integer.parseInt(inputFromUser);
+                       choice = Integer.parseInt(inputFromUser);
                    }catch (Exception e){
                        System.out.println("Fel val!");
                        continue;
                    }
-                switch (choise) {
+                switch (choice) {
                     case 1 -> priceInput(priceOfElectricity, copyOfPriceArray, sc);
                     case 2 -> minMaxMedel(priceOfElectricity, hourArray);
                     case 3 -> sortedPrice(copyOfPriceArray, copyOfHourArray);
@@ -50,7 +49,6 @@ public class App {
                 }
             }
         }
-
          /*
             Takes input from user to fill an array with the price of each hour of the day.
             Array is copied to a copy array made for sorting so that we do not affect the original array
@@ -69,7 +67,6 @@ public class App {
         System.arraycopy(arr, 0, copyArr, 0, arr.length);
     }
     public static void minMaxMedel(int[]arr, String[] arrayHours){
-
         String response = """
                 %s
                 %s
@@ -77,7 +74,6 @@ public class App {
                 """;
         String formatted = String.format(response,min(arr,arrayHours),max(arr,arrayHours),mediumValue(arr));
         System.out.print(formatted);
-
 }
 public static void menu(){
 String menuvg = """
@@ -92,11 +88,9 @@ String menuvg = """
                 """;
         System.out.print(menuvg);
     }
-
     public static void sortedPrice(int[] arrPrice, String[] arrHour){
         int temporaryPrice;
         String tempString;
-
         for (int i = 0; i < arrPrice.length-1; i++) {
             for (int j = 0; j < arrPrice.length - i -1; j++) {
                 {
@@ -116,7 +110,6 @@ String menuvg = """
             System.out.print(arrHour[i] + " " + arrPrice[i] + " öre\n");
         }
     }
-
      /*
         This method shows the best price of 4 hours after each other
      */
@@ -124,7 +117,6 @@ String menuvg = """
         double sum = Double.MAX_VALUE;
         String firstHour = "";
         double price;
-
          /*
             Loops through the price array with -4 in length so that we don't go out of bounds.
             If the sum of all 4 following numbers combined are smaller than the value of sum, the value sum
@@ -137,9 +129,7 @@ String menuvg = """
                 firstHour = arrHours[i].substring(0,2);
             }
         }
-
         price = sum / 4; //Calculates the mean value of the 4 hours
-        
         String response = """
                 Påbörja laddning klockan %s
                 Medelpris 4h: %.1f öre/kWh
@@ -147,13 +137,11 @@ String menuvg = """
         String formattedString = String.format(response,firstHour,price);
         System.out.print("\n" + formattedString);
     }
-
      /*
         This method returns a visual diagram on 6 levels which shows
         the volatility of the price through the day
      */
     public static void diagram(int[] arr, String[] arrayHours) {
-
         int maxValue = 0; // Maxvalue as a roof
         int minValue = Integer.MAX_VALUE; // Minvalue as a floor
         int valueUnderMax; //2nd level
@@ -161,10 +149,9 @@ String menuvg = """
         int valueOverMin; //4th level
         int valueOverMedium; //5th value
         int rowValue; //The amount to raise every level with
-
          /*
           Declares the largest and smallest number
-       */
+         */
         for (int i = 0; i < arr.length; i++) {
             if (minValue > arr[i]) {
                 minValue = arr[i];
@@ -173,100 +160,47 @@ String menuvg = """
                 maxValue = arr[i];
             }
         }
-
         rowValue = (maxValue - minValue) / 5; // Calculates what value to be added to each level
         valueOverMin = minValue + rowValue;
         mediumValue = (valueOverMin + rowValue);
         valueOverMedium = (mediumValue + rowValue);
         valueUnderMax = valueOverMedium + rowValue;
-        StringBuilder str = new StringBuilder();
 
-        for (int i = 0; i <= 7; i++) {
+        int[] levelNums = {maxValue,valueUnderMax,valueOverMedium,mediumValue,valueOverMin,minValue};
+
+        for (int i = 0; i < levelNums.length; i++) {
             for (int j = 0; j < arr.length; j++) {
-                switch (i) {
-                    case 0:
-                        if (j == 0)
-                            str.append(String.format("%3d|", maxValue, ""));
-                        if (arr[j] == maxValue)
-                            str.append(String.format("%2sx", ""));
-                        else
-                            str.append(String.format(" %2s", ""));
-                        if (j == arr.length - 1)
-                            str.append(String.format("\n"));
-                        break;
-                    case 1:
-                        if (j == 0)
-                            str.append(String.format("%3s|", "", ""));
-                        if (arr[j] >= valueUnderMax)
-                            str.append(String.format("%2sx", ""));
-                        else
-                            str.append(String.format(" %2s", ""));
-                        if (j == arr.length - 1)
-                            str.append(String.format("\n"));
-                        break;
-                    case 2:
-                        if (j == 0)
-                            str.append(String.format("%3s|", "", ""));
-                        if (arr[j] >= valueOverMedium)
-                            str.append(String.format("%2sx", ""));
-                        else
-                            str.append(String.format(" %2s", ""));
-                        if (j == arr.length - 1)
-                            str.append(String.format("\n"));
-                        break;
-                    case 3:
-                        if (j == 0)
-                            str.append(String.format("%3s|", "", ""));
-                        if (arr[j] >= mediumValue)
-                            str.append(String.format("%2sx", ""));
-                        else
-                            str.append(String.format(" %2s", ""));
-                        if (j == arr.length - 1)
-                            str.append(String.format("\n"));
-                        break;
-                    case 4:
-                        if (j == 0)
-                            str.append(String.format("%3s|", "", ""));
-                        if (arr[j] >= valueOverMin)
-                            str.append(String.format("%2sx", ""));
-                        else
-                            str.append(String.format(" %2s", ""));
-                        if (j == arr.length - 1)
-                            str.append(String.format("\n"));
-                        break;
-                    case 5:
-                        if (j == 0)
-                            str.append(String.format("%3d|", minValue));
-                        if (arr[j] >= minValue)
-                            str.append(String.format("%2sx", ""));
-                        else
-                            str.append(String.format(" %2s", ""));
-                        if (j == arr.length - 1)
-                            str.append(String.format("\n"));
-                        break;
-                    case 6:
-                        if (j == 0)
-                            str.append(String.format("%3s|---", ""));
-                        else
-                            str.append("---");
-                        break;
-                    case 7:
-                        if (j == 0)
-                            str.append(String.format("\n%3s| 00", ""));
-                        else
-                            str.append(" " + arrayHours[j].substring(0, 2));
-                        if (j == arr.length - 1)
-                            str.append(String.format("\n"));
-                        break;
-                }
+                if(i == 0 && j == 0)
+                    System.out.printf("%3d|",maxValue);
+                if(i == 5 && j == 0)
+                    System.out.printf("%3d|",minValue);
+                if(j == 0 && i != 0 && i != 5)
+                    System.out.printf("%3s|","");
+                if(arr[j] >= levelNums[i])
+                    System.out.printf("%2sx", "");
+                else
+                    System.out.printf("%3s", "");
             }
+            System.out.print("\n");
         }
-        System.out.print(str);
+        for (int j = 0; j < 48; j++) {
+            if (j == 0)
+                System.out.printf("%3s|","");
+            if (j < 24)
+                System.out.print("---");
+            if (j == 24)
+                System.out.print("\n");
+            if(j > 24)
+                if (j == 25)
+                    System.out.printf("%3s|%1s00%1s"+(arrayHours[j - arrayHours.length].substring(0,2)),"","","");
+                else
+                    System.out.printf("%1s"+(arrayHours[j - arrayHours.length].substring(0,2)),"","");
+        }
+        System.out.print("\n");
     }
     public static String max(int[] arr, String[] arrayHours){
         int maxValue = 0;
         String hour = "";
-
         for (int i = 0; i < arr.length; i++){
             if (maxValue < arr[i]) {
                 maxValue = arr[i];
@@ -275,7 +209,6 @@ String menuvg = """
         }
         return String.format("Högsta pris: %s, %d öre/kWh",hour,maxValue);
     }
-
      /*
         This method calculates the lowest price of the price array,
         then returns a formatted string to its caller together with the hour
@@ -284,7 +217,6 @@ String menuvg = """
     public static String min(int[] arr, String[] arrayHours){
         int minValue = Integer.MAX_VALUE;
         String hour = "";
-
         for (int i = 0; i < arr.length; i++){
             if (minValue > arr[i]) {
                 minValue = arr[i];
@@ -293,8 +225,6 @@ String menuvg = """
         }
         return String.format("Lägsta pris: %s, %d öre/kWh",hour,minValue);
     }
-
-
      /*
         This method calculates the medium price of the price array,
         then returns a formatted string to its caller
@@ -305,8 +235,6 @@ String menuvg = """
             sum += j;
         }
         double mediumSum = (sum / 24);
-
         return String.format("Medelpris: %.2f öre/kWh",mediumSum);
     }
 }
-
