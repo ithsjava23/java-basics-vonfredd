@@ -144,11 +144,11 @@ String menuvg = """
     public static void diagram(int[] arr, String[] arrayHours) {
         int maxValue = 0; // Maxvalue as a roof
         int minValue = Integer.MAX_VALUE; // Minvalue as a floor
-        int valueUnderMax; //2nd level
-        int mediumValue; //4th level
-        int valueOverMin; //5th level
-        int valueOverMedium; //3rd level
-        int rowValue; //The amount to raise every level with
+        double valueUnderMax; //2nd level
+        double mediumValue; //4th level
+        double valueOverMin; //5th level
+        double valueOverMedium; //3rd level
+        double rowValue; //The amount to raise every level with
          /*
           Declares the largest and smallest number
          */
@@ -160,13 +160,17 @@ String menuvg = """
                 maxValue = arr[i];
             }
         }
-        rowValue = (maxValue - minValue) / 5; // Calculates what value to be added to each level
-        valueOverMin = minValue + rowValue;
-        mediumValue = (valueOverMin + rowValue);
+        rowValue = (maxValue - minValue) / 5f; // Calculates what value to be added to each level
+        valueOverMin =  (minValue + rowValue);
+        int overMin = (int)valueOverMin;
+        mediumValue =  (valueOverMin + rowValue);
+        int medium = (int)mediumValue;
         valueOverMedium = (mediumValue + rowValue);
-        valueUnderMax = valueOverMedium + rowValue;
+        int overMed = (int)valueOverMedium;
+        valueUnderMax =  (int)(valueOverMedium + rowValue);
+        int underMax = (int)valueUnderMax;
 
-        int[] levelNums = {maxValue,valueUnderMax,valueOverMedium,mediumValue,valueOverMin,minValue};
+        double[] levelNums = {maxValue,underMax,overMed,medium,overMin,minValue};
         StringBuilder endingLines = new StringBuilder();
         StringBuilder hours = new StringBuilder();
 
